@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace DuckGame
 {
     public partial class Form1 : Form
-    {   //hui
+    {   //hui vam
         
         private Point positionMouse;
         private bool dragging, lose =false;
