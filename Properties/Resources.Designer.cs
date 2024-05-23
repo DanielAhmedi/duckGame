@@ -63,9 +63,9 @@ namespace DuckGame.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap battery {
+        internal static System.Drawing.Bitmap _13e06a48c8aaa4f8504175bc07ae0849 {
             get {
-                object obj = ResourceManager.GetObject("battery", resourceCulture);
+                object obj = ResourceManager.GetObject("13e06a48c8aaa4f8504175bc07ae0849", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,19 @@ namespace DuckGame.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap enemy1 {
+        internal static System.Drawing.Bitmap _3577759_middle {
             get {
-                object obj = ResourceManager.GetObject("enemy1", resourceCulture);
+                object obj = ResourceManager.GetObject("3577759-middle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap battery {
+            get {
+                object obj = ResourceManager.GetObject("battery", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +103,9 @@ namespace DuckGame.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap energyPatron2 {
+        internal static System.Drawing.Bitmap joZZd_2khHw {
             get {
-                object obj = ResourceManager.GetObject("energyPatron2", resourceCulture);
+                object obj = ResourceManager.GetObject("joZZd_2khHw", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +113,9 @@ namespace DuckGame.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap image_removebg_preview__1_ {
+        internal static System.Drawing.Bitmap techertizer {
             get {
-                object obj = ResourceManager.GetObject("image-removebg-preview (1)", resourceCulture);
+                object obj = ResourceManager.GetObject("techertizer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,19 +123,9 @@ namespace DuckGame.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap image_removebg_preview_2_ {
+        internal static System.Drawing.Bitmap Фон {
             get {
-                object obj = ResourceManager.GetObject("image-removebg-preview(2)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap theme {
-            get {
-                object obj = ResourceManager.GetObject("theme", resourceCulture);
+                object obj = ResourceManager.GetObject("Фон", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
