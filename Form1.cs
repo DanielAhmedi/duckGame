@@ -1,31 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Media;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
+using System.Windows.Forms;
+
 namespace DuckGame
 {
     public partial class Form1 : Form
-    {   
+    {
         private Point positionMouse;
-        private bool dragging, lose =false;
-        private int countPatrones=0;
+        private bool dragging, lose = false;
+        private int countPatrones = 0;
         public int speedBullet = 10;
         private bool attack = false;
-        private int countdown = 10; // начальное значение обратного отсчета 
+        private int countdown = 10;
         private System.Windows.Forms.Timer countdownTimer;
 
         public Form1()
         {
             InitializeComponent();
+            InitializeGameSettings();
+        }
+
+        private void InitializeGameSettings()
+        {
             bg1.MouseDown += MouseClickDown;
             bg1.MouseUp += MouseClickUp;
             bg1.MouseMove += MouseClickMove;
@@ -40,27 +37,26 @@ namespace DuckGame
             devide.Visible = false;
             fall.Visible = false;
             MXP2.Visible = false;
-            MXP2.URL = (@"C:\Users\Данил\source\repos\DuckGame\Resources\teacherprew.wav");
-            MXP2.Ctlcontrols.play();
             MXP.Visible = false;
-            MXP.URL = @"C:\Users\Данил\source\repos\DuckGame\Resources\OST.wav";
-            MXP.Ctlcontrols.play();
             fon.Visible = false;
             message.Visible = true;
-            countdownTimer = new System.Windows.Forms.Timer();
-            countdownTimer.Tick += new EventHandler(countdownTimer_Tick);
-            countdownTimer.Interval = 1800; // интервал таймера в миллисекундах (в данном случае 1 секунда) 
-            countdownTimer.Start();
+            MXP2.URL = @"C:\Users\Данил\source\repos\DuckGame\Resources\teacherprew.wav";
+            MXP.URL = @"C:\Users\Данил\source\repos\DuckGame\Resources\OST.wav";
+            MXP.Ctlcontrols.stop();
+            MXP2.Ctlcontrols.stop();
+            labelStart.Visible = true;
+            timer1.Enabled = false;
+            countdownTimer = new System.Windows.Forms.Timer { Interval = 1800 };
+            countdownTimer.Tick += countdownTimer_Tick;
+            countdownTimer.Stop();
         }
 
         private void countdownTimer_Tick(object sender, EventArgs e)
         {
-            countdown--; // уменьшаем значение обратного отсчета на 1 каждую секунду 
-
+            countdown--;
             if (countdown == 2)
             {
                 fall.Visible = true;
-                                
             }
             if (countdown == 0)
             {
@@ -70,26 +66,33 @@ namespace DuckGame
             }
         }
 
-
         private void MouseClickDown(object sender, MouseEventArgs e)
         {
             dragging = true;
-            positionMouse.X=e.X; positionMouse.Y=e.Y;
+            positionMouse = e.Location;
         }
+
         private void MouseClickUp(object sender, MouseEventArgs e)
         {
             dragging = false;
         }
+
         private void MouseClickMove(object sender, MouseEventArgs e)
         {
             if (dragging)
             {
-                Point currentPoint = PointToScreen(new Point(e.X, e.Y));
-                this.Location =new Point(currentPoint.X - positionMouse.X+bg1.Left, currentPoint.Y - positionMouse.Y);
+                Point currentPoint = PointToScreen(e.Location);
+                this.Location = new Point(currentPoint.X - positionMouse.X + bg1.Left, currentPoint.Y - positionMouse.Y);
             }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
+        {
+            MoveObjects();
+            CheckCollisions();
+        }
+
+        private void MoveObjects()
         {
             int speed = 10;
             bg1.Left += speed;
@@ -99,148 +102,168 @@ namespace DuckGame
             enemy2.Left += speedEnemy;
             patrones.Left += speed;
             message.Top += 4;
-            if(message.Top>=0) message.Top = 0;
+            if (message.Top >= 0) message.Top = 0;
             if (attack)
             {
                 bullet.Left -= speedBullet;
                 bullet.Visible = true;
                 bullet.Enabled = true;
                 labelPatrones.Text = "Taken patrones: " + countPatrones;
-                
-            }
-            
-            if (enemy1.Left >= 1280)
-            {
-                enemy1.Left = -120;
-                Random randomSpawn = new Random();
-                enemy1.Top = randomSpawn.Next(0, 290);
             }
 
-            if(patrones.Left > 1280)
-            {
-                patrones.Left = -220;
-                Random randomSpawn = new Random();
-                patrones.Top = randomSpawn.Next(0, 520);
-                devide.Visible = false;
-            }
-            if(enemy2.Left >= 1280)
-            {
-                enemy2.Left = -120;
-                Random randomSpawn = new Random();
-                enemy2.Top = randomSpawn.Next(291, 520);
-                devide.Visible = false;
-            }
-            if (bg1.Left >= 1280) 
-            {
-                bg1.Left = 0;
-                bg2.Left = -1280;
-            }
-            if(player.Bounds.IntersectsWith(enemy1.Bounds) || player.Bounds.IntersectsWith(enemy2.Bounds) || (player.Top >= 590))
-            {
-                timer1.Enabled = false;
-                labelLose.Visible = true;
-                btnRestart.Visible = true;
-                lose = true;
-                fon.Left = player.Left;
-                fon.Top = player.Top;
-                fon.Visible = true;
-            }
-            if(enemy1.Bounds.IntersectsWith(bullet.Bounds))
-            {
-                bullet.Visible = false;
-                bullet.Enabled = false;
-                devide.Top = enemy1.Top;
-                devide.Left = enemy1.Left;
-                devide.Visible = true;
-                devide.Left += 10;
-                enemy1.Left = -240;
-                attack = false;
-                bullet.Left = 0;
-                bullet.Top = 0;
-                
-                SoundPlayer playerMedia = new SoundPlayer();
-                playerMedia.SoundLocation = (@"C:\Users\Данил\source\repos\DuckGame\Resources\bah.wav");
-                playerMedia.Play();
-            }
-            if (enemy2.Bounds.IntersectsWith(bullet.Bounds))
-            {
-                bullet.Visible = false;
-                attack = false;
-                bullet.Enabled = false;
-                devide.Top = enemy2.Top;
-                devide.Left = enemy2.Left;
-                devide.Visible = true;
-                devide.Left += 10;
-                enemy2.Left = -210;
-                bullet.Left = 0;
-                bullet.Top = 0;
-                
-                SoundPlayer playerMedia = new SoundPlayer();
-                playerMedia.SoundLocation = (@"C:\Users\Данил\source\repos\DuckGame\Resources\bah.wav");
-                playerMedia.Play();
+            if (enemy1.Left >= 1280) ResetEnemyPosition(enemy1, 0, 290);
+            if (patrones.Left > 1280) ResetPatronesPosition();
+            if (enemy2.Left >= 1280) ResetEnemyPosition(enemy2, 291, 520);
+            if (bg1.Left >= 1280) ResetBackgroundPosition();
+        }
 
-            }
-            if (player.Bounds.IntersectsWith(patrones.Bounds))
+        private void ResetEnemyPosition(PictureBox enemy, int minY, int maxY)
+        {
+            enemy.Left = -120;
+            Random randomSpawn = new Random();
+            enemy.Top = randomSpawn.Next(minY, maxY);
+            devide.Visible = false;
+        }
+
+        private void ResetPatronesPosition()
+        {
+            patrones.Left = -220;
+            Random randomSpawn = new Random();
+            patrones.Top = randomSpawn.Next(0, 520);
+            devide.Visible = false;
+        }
+
+        private void ResetBackgroundPosition()
+        {
+            bg1.Left = 0;
+            bg2.Left = -1280;
+        }
+
+        private void CheckCollisions()
+        {
+            if (player.Bounds.IntersectsWith(enemy1.Bounds) || player.Bounds.IntersectsWith(enemy2.Bounds) || player.Top >= 590)
             {
-                countPatrones++;
-                labelPatrones.Text = "Taken patrones: "+countPatrones.ToString();
-                patrones.Left = -220;
-                Random rand = new Random();
-                patrones.Top = rand.Next(0, 590);
+                GameOver();
+            }
+            if (enemy1.Bounds.IntersectsWith(bullet.Bounds)) HandleBulletHit(enemy1);
+            if (enemy2.Bounds.IntersectsWith(bullet.Bounds)) HandleBulletHit(enemy2);
+            if (player.Bounds.IntersectsWith(patrones.Bounds)) CollectPatrones();
+        }
+
+        private void GameOver()
+        {
+            timer1.Enabled = false;
+            labelLose.Visible = true;
+            btnRestart.Visible = true;
+            lose = true;
+            fon.Location = player.Location;
+            fon.Visible = true;
+        }
+
+        private void HandleBulletHit(PictureBox enemy)
+        {
+            bullet.Visible = false;
+            bullet.Enabled = false;
+            devide.Location = new Point(enemy.Left + 10, enemy.Top);
+            devide.Visible = true;
+            enemy.Left = -240;
+            attack = false;
+            bullet.Location = Point.Empty;
+            PlaySound(@"C:\Users\Данил\source\repos\DuckGame\Resources\bah.wav");
+        }
+
+        private void CollectPatrones()
+        {
+            countPatrones++;
+            labelPatrones.Text = "Taken patrones: " + countPatrones;
+            ResetPatronesPosition();
+        }
+
+        private void PlaySound(string path)
+        {
+            using (SoundPlayer playerMedia = new SoundPlayer(path))
+            {
+                playerMedia.Play();
             }
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (lose) return;
+
             int speedPlane = 10;
-            if ((e.KeyCode == Keys.Up || e.KeyCode == Keys.W) &&(player.Top >=0))
-                player.Top -= speedPlane;
-            else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
-                player.Top += speedPlane;
-            else if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
-                player.Left -= speedPlane;
-            else if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            switch (e.KeyCode)
             {
-
-                player.Left += speedPlane;
+                case Keys.Up:
+                case Keys.W:
+                    if (player.Top >= 0) player.Top -= speedPlane;
+                    break;
+                case Keys.Down:
+                case Keys.S:
+                    player.Top += speedPlane;
+                    break;
+                case Keys.Left:
+                case Keys.A:
+                    player.Left -= speedPlane;
+                    break;
+                case Keys.Right:
+                case Keys.D:
+                    player.Left += speedPlane;
+                    break;
+                case Keys.Space:
+                    if (countPatrones > 0)
+                    {
+                        bullet.Location = player.Location;
+                        attack = true;
+                        countPatrones--;
+                        PlaySound(@"C:\Users\Данил\source\repos\DuckGame\Resources\poletpuli.wav");
+                    }
+                    break;
+                case Keys.Escape:
+                    this.Close();
+                    break;
             }
-            else if ((e.KeyCode == Keys.Space) && (countPatrones > 0))
-            {
-                
-                bullet.Left = player.Left;
-                bullet.Top = player.Top;
-                attack = true;
-                countPatrones--;
-                SoundPlayer playerMedia = new SoundPlayer();
-                playerMedia.SoundLocation = (@"C:\Users\Данил\source\repos\DuckGame\Resources\poletpuli.wav");
-                playerMedia.Play();
-                
-            }
-
-            else if (e.KeyCode == Keys.Escape)
-                this.Close();
         }
 
+        private void labelStart_Click(object sender, EventArgs e)
+        {
+            StartGame();
+        }
 
-        private void btnRestart_Click(object sender, EventArgs e)
+        private void StartGame()
         {
             player.Top = 250;
             enemy1.Left = -120;
             enemy2.Left = -330;
-            labelLose.Visible=false;
-            btnRestart.Visible=false; 
-            timer1.Enabled= true;
+            labelStart.Visible = false;
+            countdownTimer.Start();
+            timer1.Enabled = true;
+            MXP.Ctlcontrols.play();
+            MXP2.Ctlcontrols.play();
+        }
+
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+            RestartGame();
+        }
+
+        private void RestartGame()
+        {
+            player.Top = 250;
+            enemy1.Left = -120;
+            enemy2.Left = -330;
+            labelLose.Visible = false;
+            btnRestart.Visible = false;
+            timer1.Enabled = true;
             lose = false;
             countPatrones = 0;
             labelPatrones.Text = "Taken patrones: 0";
-            patrones.Left = -220;
+            ResetPatronesPosition();
             bullet.Visible = false;
             bullet.Enabled = false;
             Application.Restart();
-            SoundPlayer playerMedia = new SoundPlayer();
-            playerMedia.SoundLocation = (@"C:\Users\Данил\source\repos\DuckGame\Resources\testik.wav");
-            playerMedia.Play();
+            Environment.Exit(0);
+            PlaySound(@"C:\Users\Данил\source\repos\DuckGame\Resources\testik.wav");
         }
     }
 }

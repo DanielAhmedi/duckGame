@@ -49,6 +49,7 @@ namespace DuckGame
             this.player = new System.Windows.Forms.PictureBox();
             this.bg1 = new System.Windows.Forms.PictureBox();
             this.bg2 = new System.Windows.Forms.PictureBox();
+            this.labelStart = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.MXP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MXP2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fall)).BeginInit();
@@ -119,11 +120,12 @@ namespace DuckGame
             // MXP2
             // 
             this.MXP2.Enabled = true;
-            this.MXP2.Location = new System.Drawing.Point(890, 511);
+            this.MXP2.Location = new System.Drawing.Point(943, 509);
             this.MXP2.Name = "MXP2";
             this.MXP2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("MXP2.OcxState")));
             this.MXP2.Size = new System.Drawing.Size(224, 47);
             this.MXP2.TabIndex = 14;
+            
             // 
             // fall
             // 
@@ -177,7 +179,6 @@ namespace DuckGame
             this.bullet.TabIndex = 9;
             this.bullet.TabStop = false;
             this.bullet.Visible = false;
-            
             // 
             // patrones
             // 
@@ -243,10 +244,24 @@ namespace DuckGame
             this.bg2.TabIndex = 2;
             this.bg2.TabStop = false;
             // 
+            // labelStart
+            // 
+            this.labelStart.AutoSize = true;
+            this.labelStart.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.labelStart.Font = new System.Drawing.Font("Playbill", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStart.Location = new System.Drawing.Point(527, 241);
+            this.labelStart.Name = "labelStart";
+            this.labelStart.Size = new System.Drawing.Size(201, 98);
+            this.labelStart.TabIndex = 17;
+            this.labelStart.Text = "START";
+            this.labelStart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelStart.Click += new System.EventHandler(this.labelStart_Click);
+            // 
             // Form1
             // 
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1280, 719);
+            this.Controls.Add(this.labelStart);
             this.Controls.Add(this.fall);
             this.Controls.Add(this.MXP2);
             this.Controls.Add(this.message);
@@ -302,6 +317,7 @@ namespace DuckGame
         private System.Windows.Forms.PictureBox message;
         private AxWMPLib.AxWindowsMediaPlayer MXP2;
         private System.Windows.Forms.PictureBox fall;
+        private System.Windows.Forms.Label labelStart;
     }
 }
 
