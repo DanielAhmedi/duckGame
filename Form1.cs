@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Media;
 using System.Windows.Forms;
-
+using System.IO;
 namespace DuckGame
 {
     public partial class Form1 : Form
@@ -13,7 +13,7 @@ namespace DuckGame
         public int speedBullet = 10;
         private bool attack = false;
         private int countdown = 10;
-        private System.Windows.Forms.Timer countdownTimer;
+        private Timer countdownTimer;
 
         public Form1()
         {
@@ -40,15 +40,16 @@ namespace DuckGame
             MXP.Visible = false;
             fon.Visible = false;
             message.Visible = true;
-            MXP2.URL = @"C:\Users\Данил\source\repos\DuckGame\Resources\teacherprew.wav";
-            MXP.URL = @"C:\Users\Данил\source\repos\DuckGame\Resources\OST.wav";
+            MXP2.URL = @"Resources\teacherprew.wav";
+            MXP.URL = @"Resources\OST.wav";
             MXP.Ctlcontrols.stop();
             MXP2.Ctlcontrols.stop();
             labelStart.Visible = true;
             timer1.Enabled = false;
-            countdownTimer = new System.Windows.Forms.Timer { Interval = 1800 };
+            countdownTimer = new Timer { Interval = 1800 };
             countdownTimer.Tick += countdownTimer_Tick;
             countdownTimer.Stop();
+
         }
 
         private void countdownTimer_Tick(object sender, EventArgs e)
@@ -169,7 +170,7 @@ namespace DuckGame
             enemy.Left = -240;
             attack = false;
             bullet.Location = Point.Empty;
-            PlaySound(@"C:\Users\Данил\source\repos\DuckGame\Resources\bah.wav");
+            PlaySound(@"Resources\bah.wav");
         }
 
         private void CollectPatrones()
@@ -216,7 +217,7 @@ namespace DuckGame
                         bullet.Location = player.Location;
                         attack = true;
                         countPatrones--;
-                        PlaySound(@"C:\Users\Данил\source\repos\DuckGame\Resources\poletpuli.wav");
+                        PlaySound(@"Resources\poletpuli.wav");
                     }
                     break;
                 case Keys.Escape:
@@ -263,7 +264,7 @@ namespace DuckGame
             bullet.Enabled = false;
             Application.Restart();
             Environment.Exit(0);
-            PlaySound(@"C:\Users\Данил\source\repos\DuckGame\Resources\testik.wav");
+            PlaySound(@"Resources\testik.wav");
         }
     }
 }
