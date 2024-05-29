@@ -12,8 +12,10 @@ namespace DuckGame
         private int countPatrones = 0;
         public int speedBullet = 10;
         private bool attack = false;
-        private int countdown = 10;
+        private int countdown = 60; 
+        
         private Timer countdownTimer;
+        
 
         public Form1()
         {
@@ -39,31 +41,40 @@ namespace DuckGame
             MXP2.Visible = false;
             MXP.Visible = false;
             fon.Visible = false;
-            message.Visible = true;
+            message.Visible = false;
             MXP2.URL = @"Resources\teacherprew.wav";
             MXP.URL = @"Resources\OST.wav";
             MXP.Ctlcontrols.stop();
             MXP2.Ctlcontrols.stop();
             labelStart.Visible = true;
             timer1.Enabled = false;
-            countdownTimer = new Timer { Interval = 1800 };
+            win.Visible = false;
+            countdownTimer = new Timer { Interval = 1000 };
             countdownTimer.Tick += countdownTimer_Tick;
             countdownTimer.Stop();
-
+            
         }
+
 
         private void countdownTimer_Tick(object sender, EventArgs e)
         {
             countdown--;
-            if (countdown == 2)
+            if (countdown == 45)
             {
                 fall.Visible = true;
             }
-            if (countdown == 0)
+            if (countdown == 43)
             {
                 fall.Visible = false;
                 message.Visible = false;
+                
+            }
+            if (countdown == 0)
+            {
+                timer1.Enabled = false;
+                win.Visible = true;
                 countdownTimer.Stop();
+                PlaySound(@"Resources\testik.wav");
             }
         }
 
@@ -229,6 +240,7 @@ namespace DuckGame
         private void labelStart_Click(object sender, EventArgs e)
         {
             StartGame();
+
         }
 
         private void StartGame()
@@ -241,12 +253,16 @@ namespace DuckGame
             timer1.Enabled = true;
             MXP.Ctlcontrols.play();
             MXP2.Ctlcontrols.play();
+            
+            message.Visible = true;
         }
 
         private void btnRestart_Click(object sender, EventArgs e)
         {
             RestartGame();
         }
+
+
 
         private void RestartGame()
         {

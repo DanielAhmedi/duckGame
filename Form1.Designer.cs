@@ -50,6 +50,7 @@ namespace DuckGame
             this.bg1 = new System.Windows.Forms.PictureBox();
             this.bg2 = new System.Windows.Forms.PictureBox();
             this.labelStart = new System.Windows.Forms.Label();
+            this.win = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.MXP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MXP2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fall)).BeginInit();
@@ -76,7 +77,7 @@ namespace DuckGame
             this.labelLose.AutoSize = true;
             this.labelLose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.labelLose.Font = new System.Drawing.Font("Playbill", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelLose.Location = new System.Drawing.Point(480, 274);
+            this.labelLose.Location = new System.Drawing.Point(477, 292);
             this.labelLose.Name = "labelLose";
             this.labelLose.Size = new System.Drawing.Size(284, 98);
             this.labelLose.TabIndex = 5;
@@ -125,7 +126,6 @@ namespace DuckGame
             this.MXP2.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("MXP2.OcxState")));
             this.MXP2.Size = new System.Drawing.Size(224, 47);
             this.MXP2.TabIndex = 14;
-            
             // 
             // fall
             // 
@@ -257,10 +257,23 @@ namespace DuckGame
             this.labelStart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.labelStart.Click += new System.EventHandler(this.labelStart_Click);
             // 
+            // win
+            // 
+            this.win.AutoSize = true;
+            this.win.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.win.Font = new System.Drawing.Font("Playbill", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.win.Location = new System.Drawing.Point(336, 194);
+            this.win.Name = "win";
+            this.win.Size = new System.Drawing.Size(628, 98);
+            this.win.TabIndex = 18;
+            this.win.Text = "YOUR ARMY DID COME";
+            this.win.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1280, 719);
+            this.Controls.Add(this.win);
             this.Controls.Add(this.labelStart);
             this.Controls.Add(this.fall);
             this.Controls.Add(this.MXP2);
@@ -318,6 +331,7 @@ namespace DuckGame
         private AxWMPLib.AxWindowsMediaPlayer MXP2;
         private System.Windows.Forms.PictureBox fall;
         private System.Windows.Forms.Label labelStart;
+        private System.Windows.Forms.Label win;
     }
 }
 
